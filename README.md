@@ -23,6 +23,8 @@ The app opens at [http://localhost:8501](http://localhost:8501).
 
 ## Application Pages
 
+Each model page includes an expandable **Model Equations** section with LaTeX-rendered formulas.
+
 ### 1. Home
 
 Landing page with an overview of each pricing model and a reference table of the Greeks.
@@ -376,6 +378,7 @@ The convergence is O(1/N) and oscillates around the true value (odd and even N a
 options-models/
 ├── app.py                          # Entry point — page routing
 ├── requirements.txt
+├── render.yaml                     # Render deployment blueprint
 ├── .streamlit/
 │   └── config.toml                 # toolbarMode = "viewer"
 ├── components/
@@ -399,6 +402,18 @@ options-models/
     ├── convergence.py              # Convergence line chart
     └── tree_plot.py                # Binomial lattice visualization
 ```
+
+## Deployment
+
+A `render.yaml` blueprint is included for one-click deployment to [Render](https://render.com):
+
+1. Push the repo to GitHub.
+2. In the Render dashboard, click **New > Blueprint** and connect the repo.
+3. Render will detect `render.yaml` and deploy the Streamlit app as a web service.
+
+The blueprint configures Python 3.12, installs dependencies, and runs Streamlit in headless mode.
+
+---
 
 ## Shared Parameters
 
