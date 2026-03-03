@@ -21,6 +21,19 @@ if style == "american":
 else:
     st.caption("European option — exercise permitted only at expiration.")
 
+with st.expander("Model Equations"):
+    st.latex(r"d_1 = \frac{\ln(S/K) + (r + \tfrac{1}{2}\sigma^2)\,T}{\sigma\sqrt{T}}")
+    st.latex(r"d_2 = d_1 - \sigma\sqrt{T}")
+    st.markdown("**Option Price**")
+    st.latex(r"C = S\,N(d_1) - K\,e^{-rT}\,N(d_2)")
+    st.latex(r"P = K\,e^{-rT}\,N(-d_2) - S\,N(-d_1)")
+    st.markdown("**Greeks**")
+    st.latex(r"\Delta_C = N(d_1), \quad \Delta_P = N(d_1) - 1")
+    st.latex(r"\Gamma = \frac{n(d_1)}{S\,\sigma\sqrt{T}}")
+    st.latex(r"\Theta_C = -\frac{S\,n(d_1)\,\sigma}{2\sqrt{T}} - r\,K\,e^{-rT}\,N(d_2)")
+    st.latex(r"\mathcal{V} = S\,n(d_1)\sqrt{T}")
+    st.latex(r"\rho_C = K\,T\,e^{-rT}\,N(d_2)")
+
 results = bs.all_greeks(S, K, T, r, sigma, opt)
 show_greeks = st.toggle("Show Greeks", value=True)
 show_greek_metrics(results, show_greeks)

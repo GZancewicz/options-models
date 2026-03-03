@@ -40,6 +40,19 @@ r = st.sidebar.slider(
     "Risk-Free Rate (r)", min_value=0.0, max_value=0.20, value=0.05, step=0.005
 )
 
+with st.expander("Model Equations"):
+    st.markdown("**Structure:** Binary Call at $K_{\\text{call}}$ + Binary Put at $K_{\\text{put}}$")
+    st.markdown("**Individual Leg Pricing**")
+    st.latex(r"d_2^{\text{call}} = \frac{\ln(S/K_{\text{call}}) + (r - \tfrac{1}{2}\sigma^2)\,T}{\sigma\sqrt{T}}")
+    st.latex(r"d_2^{\text{put}} = \frac{\ln(S/K_{\text{put}}) + (r - \tfrac{1}{2}\sigma^2)\,T}{\sigma\sqrt{T}}")
+    st.latex(r"V_{\text{call}} = e^{-rT}\,N(d_2^{\text{call}}), \quad V_{\text{put}} = e^{-rT}\,N(-d_2^{\text{put}})")
+    st.markdown("**Combined Spread Price**")
+    st.latex(r"V_{\text{spread}} = e^{-rT}\left[N(d_2^{\text{call}}) + N(-d_2^{\text{put}})\right]")
+    st.markdown("**Payoff at Expiry**")
+    st.latex(r"\text{Payoff} = \mathbb{1}_{S_T > K_{\text{call}}} + \mathbb{1}_{S_T < K_{\text{put}}}")
+    st.markdown("**P&L**")
+    st.latex(r"\text{Net P\&L} = \text{Payoff} - V_{\text{spread}}")
+
 # Price each leg
 call_price = binary.price(S, K_call, T, r, sigma, "call")
 put_price = binary.price(S, K_put, T, r, sigma, "put")

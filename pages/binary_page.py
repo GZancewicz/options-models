@@ -17,6 +17,17 @@ st.caption(
     "nothing otherwise. European exercise only."
 )
 
+with st.expander("Model Equations"):
+    st.latex(r"d_2 = \frac{\ln(S/K) + (r - \tfrac{1}{2}\sigma^2)\,T}{\sigma\sqrt{T}}")
+    st.markdown("**Payoff at Expiry** (step function)")
+    st.latex(r"\text{Call} = \begin{cases} 1 & S_T > K \\ 0 & S_T \leq K \end{cases} \qquad \text{Put} = \begin{cases} 1 & S_T < K \\ 0 & S_T \geq K \end{cases}")
+    st.markdown("**Option Price** (discounted risk-neutral probability)")
+    st.latex(r"C_{\text{binary}} = e^{-rT}\,N(d_2)")
+    st.latex(r"P_{\text{binary}} = e^{-rT}\,N(-d_2)")
+    st.markdown("**Greeks**")
+    st.latex(r"\Delta_C = \frac{e^{-rT}\,n(d_2)}{S\,\sigma\sqrt{T}}")
+    st.latex(r"\Gamma_C = -\frac{e^{-rT}\,n(d_2)\,d_1}{S^2\,\sigma^2\,T}")
+
 results = binary.all_greeks(S, K, T, r, sigma, opt)
 show_greeks = st.toggle("Show Greeks", value=True)
 show_greek_metrics(results, show_greeks, help_dict=BINARY_GREEK_HELP)

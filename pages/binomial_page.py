@@ -23,6 +23,20 @@ if style == "american":
 else:
     st.caption("European option — exercise permitted only at expiration.")
 
+with st.expander("Model Equations"):
+    st.markdown("**Tree Parameters**")
+    st.latex(r"\Delta t = \frac{T}{N}, \quad u = e^{\sigma\sqrt{\Delta t}}, \quad d = \frac{1}{u}, \quad p = \frac{e^{r\,\Delta t} - d}{u - d}")
+    st.markdown("**Asset Price at Node**")
+    st.latex(r"S_{i,j} = S_0 \cdot u^{j-i} \cdot d^{i}")
+    st.markdown("**Payoff at Expiry**")
+    st.latex(r"V_{i,N} = \max(S_{i,N} - K,\; 0) \;\;\text{(call)}, \quad V_{i,N} = \max(K - S_{i,N},\; 0) \;\;\text{(put)}")
+    st.markdown("**Backward Induction**")
+    st.latex(r"V_{i,j}^{\text{cont}} = e^{-r\,\Delta t}\left[p\,V_{i,j+1} + (1-p)\,V_{i+1,j+1}\right]")
+    st.markdown("European: $V_{i,j} = V_{i,j}^{\\text{cont}}$")
+    st.markdown("American: $V_{i,j} = \\max\\!\\left(V_{i,j}^{\\text{cont}},\\;\\text{intrinsic}_{i,j}\\right)$")
+    st.markdown("**Greeks (Finite Difference)**")
+    st.latex(r"\Delta \approx \frac{V(S+h) - V(S-h)}{2h}, \quad \Gamma \approx \frac{V(S+h) - 2V(S) + V(S-h)}{h^2}")
+
 tree_data = binom.build_tree(S, K, T, r, sigma, N, opt, style)
 greeks = binom.greeks_finite_difference(S, K, T, r, sigma, N, opt, style)
 
